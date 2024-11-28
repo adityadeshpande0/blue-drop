@@ -1,12 +1,50 @@
-import { SafeAreaView, Text, View } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Button, SafeAreaView, Text, View, StyleSheet } from "react-native";
+import { RootStackParamList } from "./routersRelated";
+import CustomButton from "../components/button/CustomButton";
 
-const MocksScreen: React.FC = () => {
+type LandingScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  "mockscreen"
+>;
+
+const MocksScreen: React.FC<LandingScreenProps> = ({ navigation }) => {
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Welcome to Blue Drop !</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.content}>
+        <Text style={styles.header}>
+          Use this screen to navigate to different components
+        </Text>
+        <CustomButton
+          onPress={() => navigation.navigate("login")}
+          title="Login"
+        />
+        <CustomButton
+          title="Register"
+          onPress={() => navigation.navigate("register")}
+        />
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
+  content: {
+    flex: 1,
+    alignItems: "center",
+    padding: 16,
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+    color: "#333",
+  },
+});
+
 export default MocksScreen;

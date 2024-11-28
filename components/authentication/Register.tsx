@@ -1,10 +1,10 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 const Register: React.FC = () => {
   return (
-    <div>
+    <View>
       <Text>Welcome to Blue Drop !</Text>
-    </div>
+    </View>
   );
 };
 export default Register;
