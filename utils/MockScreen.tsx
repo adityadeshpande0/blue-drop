@@ -22,6 +22,16 @@ const MocksScreen: React.FC<LandingScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.container, { marginTop: statusBarHeight }]}>
       <View style={styles.content}>
+        <Text
+          style={{
+            color: "red",
+            fontWeight: "700",
+            textAlign: "left",
+            marginBottom: 15,
+          }}
+        >
+          [Dev Mode]
+        </Text>
         <Text style={styles.header}>
           Use this screen to navigate to different components
         </Text>
@@ -45,14 +55,14 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    alignItems: "center",
+    // alignItems: "center",
     padding: 16,
   },
   header: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 20,
-    textAlign: "center",
+    textAlign: "left",
     color: "#333",
   },
 });
