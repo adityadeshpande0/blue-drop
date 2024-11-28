@@ -1,5 +1,13 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Button, SafeAreaView, Text, View, StyleSheet } from "react-native";
+import {
+  Button,
+  SafeAreaView,
+  Text,
+  View,
+  StyleSheet,
+  Platform,
+  StatusBar,
+} from "react-native";
 import { RootStackParamList } from "./routersRelated";
 import CustomButton from "../components/button/CustomButton";
 
@@ -8,9 +16,11 @@ type LandingScreenProps = NativeStackScreenProps<
   "mockscreen"
 >;
 
+const statusBarHeight = Platform.OS === "android" ? StatusBar.currentHeight : 0;
+
 const MocksScreen: React.FC<LandingScreenProps> = ({ navigation }) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { marginTop: statusBarHeight }]}>
       <View style={styles.content}>
         <Text style={styles.header}>
           Use this screen to navigate to different components

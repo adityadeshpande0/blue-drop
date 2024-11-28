@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -15,7 +16,10 @@ const AppNavigator: React.FC = () => {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator
-          screenOptions={{ headerShown: false }}
+          screenOptions={{
+            headerShown: false,
+            gestureEnabled: Platform.OS === "ios",
+          }}
           initialRouteName="mockscreen"
         >
           <Stack.Screen name="mockscreen" component={MocksScreen} />
