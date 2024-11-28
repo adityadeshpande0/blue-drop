@@ -1,10 +1,12 @@
-import { Text } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
 
 const Login: React.FC = () => {
   return (
-    <div>
-      <Text>Welcome to Blue Drop !</Text>
-    </div>
+    <SafeAreaView>
+      <View>
+        <Text>Welcome to Blue Drop !</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 export default Login;
