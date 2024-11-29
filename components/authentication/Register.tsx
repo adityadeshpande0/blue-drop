@@ -1,15 +1,8 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  StyleSheet,
-  Alert,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import axios from "axios";
 import CustomButton from "../button/CustomButton";
+import CustomInputField from "../input/CustomInputField";
 
 const Register: React.FC = () => {
   const [form, setForm] = useState({
@@ -30,7 +23,7 @@ const Register: React.FC = () => {
 
   const handleChange = (field: string, value: string) => {
     setForm({ ...form, [field]: value });
-    setErrors({ ...errors, [field]: "" }); // Clear errors on input change
+    setErrors({ ...errors, [field]: "" });
   };
 
   const validateForm = () => {
@@ -84,12 +77,14 @@ const Register: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "",
+        "https://api.example.com/register",
         form,
-        { headers: { "Content-Type": "application/json" } }
+        {
+          headers: { "Content-Type": "application/json" },
+        }
       );
       Alert.alert("Success", "User registered successfully!");
-      setForm({ name: "", email: "", phoneNumber: "", password: "" }); // Reset form
+      setForm({ name: "", email: "", phoneNumber: "", password: "" });
     } catch (error: any) {
       console.error(error);
       const message =
@@ -104,57 +99,44 @@ const Register: React.FC = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Welcome to Blue Drop!</Text>
 
-      <View style={styles.formField}>
-        <Text style={styles.label}>Name</Text>
-        <TextInput
-          style={[styles.input, errors.name ? styles.errorInput : null]}
-          placeholder="Enter your name"
-          value={form.name}
-          onChangeText={(value) => handleChange("name", value)}
-        />
-        {errors.name ? <Text style={styles.errorText}>{errors.name}</Text> : null}
-      </View>
+      {/* Name Field */}
+      <CustomInputField
+        label="Name"
+        placeholder="Enter your name"
+        value={form.name}
+        onChange={(field, value) => handleChange("name", value)}
+        name="name"
+        errorMessage={errors.name}
+      />
 
-      <View style={styles.formField}>
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={[styles.input, errors.email ? styles.errorInput : null]}
-          placeholder="Enter your email"
-          value={form.email}
-          onChangeText={(value) => handleChange("email", value)}
-          keyboardType="email-address"
-        />
-        {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
-      </View>
+      {/* Email Field */}
+      <CustomInputField
+        label="Email"
+        placeholder="Enter your email id"
+        value={form.email}
+        onChange={(field, value) => handleChange("email", value)}
+        keyboardtype="email-address"
+        name="email"
+        errorMessage={errors.email}
+      />
 
-      <View style={styles.formField}>
-        <Text style={styles.label}>Phone Number</Text>
-        <TextInput
-          style={[styles.input, errors.phoneNumber ? styles.errorInput : null]}
-          placeholder="Enter your phone number"
-          value={form.phoneNumber}
-          onChangeText={(value) => handleChange("phoneNumber", value)}
-          keyboardType="phone-pad"
-        />
-        {errors.phoneNumber ? (
-          <Text style={styles.errorText}>{errors.phoneNumber}</Text>
-        ) : null}
-      </View>
-
-      <View style={styles.formField}>
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-          style={[styles.input, errors.password ? styles.errorInput : null]}
-          placeholder="Enter your password"
-          value={form.password}
-          onChangeText={(value) => handleChange("password", value)}
-          secureTextEntry
-        />
-        {errors.password ? (
-          <Text style={styles.errorText}>{errors.password}</Text>
-        ) : null}
-      </View>
-
+      <CustomInputField
+        label="Phone Number"
+        placeholder="Enter your phone number"
+        value={form.phoneNumber}
+        onChange={(field, value) => handleChange("phoneNumber", value)}
+        keyboardtype="phone-pad"
+        name="phoneNumber"
+        errorMessage={errors.phoneNumber}
+      />
+      <CustomInputField
+        label="Password"
+        placeholder="Enter your password"
+        value={form.password}
+        onChange={(field, value) => handleChange("password", value)}
+        name="password"
+        errorMessage={errors.password}
+      />
       <CustomButton
         title={isSubmitting ? "Registering..." : "Register"}
         onPress={handleSubmit}
@@ -175,28 +157,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
-  },
-  formField: {
-    marginBottom: 15,
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    backgroundColor: "#fff",
-  },
-  errorInput: {
-    borderColor: "red",
-  },
-  errorText: {
-    color: "red",
-    fontSize: 12,
-    marginTop: 5,
   },
 });
 
