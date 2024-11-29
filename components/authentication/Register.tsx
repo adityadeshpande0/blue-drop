@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import axios from "axios";
+import CustomButton from "../button/CustomButton";
 
 const Register: React.FC = () => {
   const [form, setForm] = useState({
@@ -154,7 +155,7 @@ const Register: React.FC = () => {
         ) : null}
       </View>
 
-      <Button
+      <CustomButton
         title={isSubmitting ? "Registering..." : "Register"}
         onPress={handleSubmit}
         disabled={isSubmitting}

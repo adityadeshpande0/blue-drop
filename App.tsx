@@ -1,8 +1,13 @@
 // import { StyleSheet } from "react-native";
+import { NativeBaseProvider } from "native-base";
 import AppNavigator from "./routes/AppNavigator";
 
 export default function App() {
-  return <AppNavigator />;
+  return (
+    <NativeBaseProvider>
+      <AppNavigator />
+    </NativeBaseProvider>
+  );
 }
 
 // const styles = StyleSheet.create({
