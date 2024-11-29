@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { FormControl, Input, Text } from "native-base";
 
 interface CustomInputFieldProps {
   label: string;
@@ -23,10 +23,9 @@ const CustomInputField: React.FC<CustomInputFieldProps> = ({
   errorMessage,
 }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
-      <TextInput
-        style={[styles.input, errorMessage ? styles.errorInput : null]}
+    <FormControl isInvalid={!!errorMessage} mb={4}>
+      <FormControl.Label>{label}</FormControl.Label>
+      <Input
         placeholder={placeholder}
         value={value}
         onChangeText={(text) => onChange(name, text)}
@@ -34,34 +33,11 @@ const CustomInputField: React.FC<CustomInputFieldProps> = ({
         secureTextEntry={secureTextEntry}
         autoCapitalize="none"
       />
-      {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
-    </View>
+      {errorMessage ? (
+        <FormControl.ErrorMessage>{errorMessage}</FormControl.ErrorMessage>
+      ) : null}
+    </FormControl>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 15,
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    backgroundColor: "#fff",
-  },
-  errorInput: {
-    borderColor: "red",
-  },
-  errorText: {
-    color: "red",
-    fontSize: 12,
-    marginTop: 5,
-  },
-});
 
 export default CustomInputField;
