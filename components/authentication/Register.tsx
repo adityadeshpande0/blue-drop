@@ -99,7 +99,6 @@ const Register: React.FC = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Welcome to Blue Drop!</Text>
 
-      {/* Name Field */}
       <CustomInputField
         label="Name"
         placeholder="Enter your name"
@@ -109,7 +108,6 @@ const Register: React.FC = () => {
         errorMessage={errors.name}
       />
 
-      {/* Email Field */}
       <CustomInputField
         label="Email"
         placeholder="Enter your email id"
