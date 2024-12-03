@@ -88,6 +88,7 @@ const Login: React.FC<loginScreenProps> = ({navigation}) => {
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Welcome to Blue Drop!</Text>
+        <Text style={styles.subTitle}>Register here to continue !</Text>
         <CustomInputField
           label="Email"
           placeholder="Enter your email"
@@ -137,10 +138,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   loginButtonStyles: {
     marginVertical: 12,
@@ -149,6 +149,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  subTitle:{
+    fontSize: 18,
+    fontWeight: "500",
+    marginBottom: 10,
+  }
 });
 
 export default Login;

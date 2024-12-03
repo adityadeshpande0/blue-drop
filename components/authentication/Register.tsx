@@ -113,7 +113,8 @@ const Register: React.FC<registerScreenProps> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Welcome to Blue Drop!</Text>
+        <Text style={styles.title}>Welcome to Blue Drop !</Text>
+        <Text style={styles.subTitle}>Register here to continue !</Text>
         <CustomInputField
           label="Name"
           placeholder="Enter your name"
@@ -180,9 +181,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
-    textAlign: "center",
     marginBottom: 20,
   },
   registerButtonStyles: {
@@ -193,6 +193,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  subTitle:{
+    fontSize: 18,
+    fontWeight:'500',
+    marginBottom: 10,
+  }
 });
 
 export default Register;
