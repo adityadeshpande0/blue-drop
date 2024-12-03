@@ -26,7 +26,7 @@ const AppNavigator: React.FC = () => {
           <Stack.Screen name="landingscreen" component={LandingScreen} />
           <Stack.Screen
             options={{
-              headerShown: true,
+              headerShown: false,
             }}
             name="login"
             component={Login}

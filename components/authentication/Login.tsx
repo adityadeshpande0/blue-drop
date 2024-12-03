@@ -1,12 +1,147 @@
-import { SafeAreaView, Text, View } from "react-native";
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  ScrollView,
+} from "react-native";
+import axios from "axios";
+import CustomButton from "../button/CustomButton";
+import CustomInputField from "../input/CustomInputField";
+import LinkButton from "../button/LinkButton";
 
 const Login: React.FC = () => {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (field: string, value: string) => {
+    setForm({ ...form, [field]: value });
+    setErrors({ ...errors, [field]: "" });
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      email: "",
+      password: "",
+    };
+
+    if (!form.email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(form.email)
+    ) {
+      newErrors.email = "Invalid email format";
+      isValid = false;
+    }
+
+    if (!form.password.trim()) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await axios.post("https://api.example.com/login", form, {
+        headers: { "Content-Type": "application/json" },
+      });
+      Alert.alert("Success", "Login successful!");
+      setForm({ email: "", password: "" });
+    } catch (error: any) {
+      console.error(error);
+      const message =
+        error.response?.data?.message || "The API is Not Integrated yet.";
+      Alert.alert("Error", message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Welcome to Blue Drop !</Text>
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>Welcome to Blue Drop!</Text>
+        <CustomInputField
+          label="Email"
+          placeholder="Enter your email"
+          value={form.email}
+          onChange={handleChange}
+          name="email"
+          keyboardType="email-address"
+          errorMessage={errors.email}
+        />
+        <CustomInputField
+          label="Password"
+          placeholder="Enter your password"
+          value={form.password}
+          onChange={handleChange}
+          name="password"
+          secureTextEntry
+          errorMessage={errors.password}
+        />
+        <CustomButton
+          style={styles.loginButtonStyles}
+          title={isSubmitting ? "Logging in..." : "Login"}
+          onPress={handleSubmit}
+          disabled={isSubmitting}
+        />
+        <View style={styles.registerPrompt}>
+          <Text>Don't have an account?</Text>
+          <LinkButton
+            title="Register"
+            onPress={() => console.log("Navigate to Register")}
+            size="sm"
+            variant="link"
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
+  container: {
+    flexGrow: 1,
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  loginButtonStyles: {
+    marginVertical: 12,
+  },
+  registerPrompt: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});
+
 export default Login;
