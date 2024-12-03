@@ -8,11 +8,18 @@ import {
   ScrollView,
 } from "react-native";
 import axios from "axios";
+import { RootStackParamList } from "..//..//utils/routersRelated";
 import CustomButton from "../button/CustomButton";
 import CustomInputField from "../input/CustomInputField";
 import LinkButton from "../button/LinkButton";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-const Login: React.FC = () => {
+type loginScreenProps =NativeStackScreenProps<
+  RootStackParamList,
+  "login"
+>
+
+const Login: React.FC<loginScreenProps> = ({navigation}) => {
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -109,7 +116,7 @@ const Login: React.FC = () => {
           <Text>Don't have an account?</Text>
           <LinkButton
             title="Register"
-            onPress={() => console.log("Navigate to Register")}
+            onPress={() => navigation.navigate('register')}
             size="sm"
             variant="link"
           />

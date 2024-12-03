@@ -11,8 +11,15 @@ import axios from "axios";
 import CustomButton from "../button/CustomButton";
 import CustomInputField from "../input/CustomInputField";
 import LinkButton from "../button/LinkButton";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../utils/routersRelated";
 
-const Register: React.FC = () => {
+type registerScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  "register"
+>
+
+const Register: React.FC<registerScreenProps> = ({navigation}) => {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -152,7 +159,7 @@ const Register: React.FC = () => {
           <Text>Already have account ?</Text>
           <LinkButton
             title="Login"
-            onPress={function (): void {}}
+            onPress={()=>navigation.navigate('login')}
             size="sm"
             variant="link"
           />
