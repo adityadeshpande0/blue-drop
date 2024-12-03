@@ -1,5 +1,5 @@
-import React from "react";
-import { FormControl, Input, Text, WarningOutlineIcon } from "native-base";
+import React, { useRef } from "react";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 
 interface CustomInputFieldProps {
   label: string;
@@ -7,7 +7,7 @@ interface CustomInputFieldProps {
   value: string;
   onChange: (field: string, value: string) => void;
   name: string;
-  keyboardtype?: "default" | "email-address" | "phone-pad";
+  keyboardType?: "default" | "email-address" | "phone-pad";
   secureTextEntry?: boolean;
   errorMessage?: string;
 }
@@ -18,26 +18,56 @@ const CustomInputField: React.FC<CustomInputFieldProps> = ({
   value,
   onChange,
   name,
-  keyboardtype = "default",
+  keyboardType = "default",
   secureTextEntry = false,
   errorMessage,
 }) => {
+  const inputRef = useRef<TextInput | null>(null);
+
   return (
-    <FormControl isInvalid={!!errorMessage} mb={4}>
-      <FormControl.Label>{label}</FormControl.Label>
-      <Input
+    <View style={styles.container}>
+      {label && <Text style={styles.label}>{label}</Text>}
+      <TextInput
+        ref={inputRef}
+        style={[
+          styles.input,
+          errorMessage ? styles.inputError : null,
+        ]}
         placeholder={placeholder}
         value={value}
         onChangeText={(text) => onChange(name, text)}
-        keyboardType={keyboardtype}
+        keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
-        autoCapitalize="none"
       />
-      {errorMessage ? (
-        <FormControl.ErrorMessage>{errorMessage}</FormControl.ErrorMessage>
-      ) : null}
-    </FormControl>
+      {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 5,
+  },
+  label: {
+    fontSize: 14,
+    color: "#333",
+    marginBottom: 4,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    padding: 10,
+    fontSize: 16,
+  },
+  inputError: {
+    borderColor: "#f00",
+  },
+  errorText: {
+    color: "#f00",
+    fontSize: 12,
+    marginTop: 4,
+  },
+});
 
 export default CustomInputField;

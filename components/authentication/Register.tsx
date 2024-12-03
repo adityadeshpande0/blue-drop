@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
 import axios from "axios";
 import CustomButton from "../button/CustomButton";
 import CustomInputField from "../input/CustomInputField";
+import LinkButton from "../button/LinkButton";
 
 const Register: React.FC = () => {
   const [form, setForm] = useState({
@@ -96,65 +104,87 @@ const Register: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Welcome to Blue Drop!</Text>
-
-      <CustomInputField
-        label="Name"
-        placeholder="Enter your name"
-        value={form.name}
-        onChange={(field, value) => handleChange("name", value)}
-        name="name"
-        errorMessage={errors.name}
-      />
-
-      <CustomInputField
-        label="Email"
-        placeholder="Enter your email id"
-        value={form.email}
-        onChange={(field, value) => handleChange("email", value)}
-        keyboardtype="email-address"
-        name="email"
-        errorMessage={errors.email}
-      />
-
-      <CustomInputField
-        label="Phone Number"
-        placeholder="Enter your phone number"
-        value={form.phoneNumber}
-        onChange={(field, value) => handleChange("phoneNumber", value)}
-        keyboardtype="phone-pad"
-        name="phoneNumber"
-        errorMessage={errors.phoneNumber}
-      />
-      <CustomInputField
-        label="Password"
-        placeholder="Enter your password"
-        value={form.password}
-        onChange={(field, value) => handleChange("password", value)}
-        name="password"
-        errorMessage={errors.password}
-      />
-      <CustomButton
-        title={isSubmitting ? "Registering..." : "Register"}
-        onPress={handleSubmit}
-        disabled={isSubmitting}
-      />
-    </ScrollView>
+    <SafeAreaView style={styles.safeAreaView}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>Welcome to Blue Drop!</Text>
+        <CustomInputField
+          label="Name"
+          placeholder="Enter your name"
+          value={form.name}
+          onChange={handleChange}
+          name="name"
+          errorMessage={errors.name}
+        />
+        <CustomInputField
+          label="Email"
+          placeholder="Enter your email"
+          value={form.email}
+          onChange={handleChange}
+          name="email"
+          keyboardType="email-address"
+          errorMessage={errors.email}
+        />
+        <CustomInputField
+          label="Phone Number"
+          placeholder="Enter your phone number"
+          value={form.phoneNumber}
+          onChange={handleChange}
+          name="phoneNumber"
+          keyboardType="phone-pad"
+          errorMessage={errors.phoneNumber}
+        />
+        <CustomInputField
+          label="Password"
+          placeholder="Enter your password"
+          value={form.password}
+          onChange={handleChange}
+          name="password"
+          secureTextEntry
+          errorMessage={errors.password}
+        />
+        <CustomButton
+          style={styles.registerButtonStyles}
+          title={isSubmitting ? "Registering..." : "Register"}
+          onPress={handleSubmit}
+          disabled={isSubmitting}
+        />
+        <View style={styles.forgotView}>
+          <Text>Already have account ?</Text>
+          <LinkButton
+            title="Login"
+            onPress={function (): void {}}
+            size="sm"
+            variant="link"
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  },
   container: {
+    display: "flex",
     flexGrow: 1,
-    padding: 20,
-    backgroundColor: "#f5f5f5",
+    paddingVertical: 20,
+    paddingHorizontal: 15,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
+  },
+  registerButtonStyles: {
+    marginVertical: 12,
+  },
+  forgotView: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
 

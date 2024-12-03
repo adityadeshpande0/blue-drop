@@ -41,8 +41,8 @@ const CustomButton: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    display:'flex',
-    width:'100%',
+    display: "flex",
+    width: "100%",
     backgroundColor: "#4CAF50",
     paddingVertical: 12,
     paddingHorizontal: 30,

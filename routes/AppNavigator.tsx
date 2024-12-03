@@ -33,7 +33,7 @@ const AppNavigator: React.FC = () => {
           />
           <Stack.Screen
             options={{
-              headerShown: true,
+              headerShown: false,
             }}
             name="register"
             component={Register}
