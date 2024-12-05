@@ -13,13 +13,13 @@ import CustomInputField from "../input/CustomInputField";
 import LinkButton from "../button/LinkButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../utils/routersRelated";
-
+import { API_URL } from "@env";
 type registerScreenProps = NativeStackScreenProps<
   RootStackParamList,
   "register"
->
+>;
 
-const Register: React.FC<registerScreenProps> = ({navigation}) => {
+const Register: React.FC<registerScreenProps> = ({ navigation }) => {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -91,19 +91,16 @@ const Register: React.FC<registerScreenProps> = ({navigation}) => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post(
-        "https://api.example.com/register",
-        form,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      Alert.alert("Success", "User registered successfully!");
+      const response = await axios.post(`${API_URL}/register-user`, form, {
+        headers: { "Content-Type": "application/json" },
+      });
+      Alert.alert(response.data);
       setForm({ name: "", email: "", phoneNumber: "", password: "" });
     } catch (error: any) {
       console.error(error);
       const message =
-        error.response?.data?.message || "The API is Not Integrated yet.";
+        error.response?.data?.message ||
+        "Something went wrong. Try again later !";
       Alert.alert("Error", message);
     } finally {
       setIsSubmitting(false);
@@ -160,7 +157,7 @@ const Register: React.FC<registerScreenProps> = ({navigation}) => {
           <Text>Already have account ?</Text>
           <LinkButton
             title="Login"
-            onPress={()=>navigation.navigate('login')}
+            onPress={() => navigation.navigate("login")}
             size="sm"
             variant="link"
           />
@@ -193,11 +190,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  subTitle:{
+  subTitle: {
     fontSize: 18,
-    fontWeight:'500',
+    fontWeight: "500",
     marginBottom: 10,
-  }
+  },
 });
 
 export default Register;

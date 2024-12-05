@@ -13,7 +13,7 @@ import CustomButton from "../button/CustomButton";
 import CustomInputField from "../input/CustomInputField";
 import LinkButton from "../button/LinkButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import {API_URL} from '@env'
+import { API_URL } from "@env";
 
 type loginScreenProps = NativeStackScreenProps<RootStackParamList, "login">;
 
@@ -71,7 +71,7 @@ const Login: React.FC<loginScreenProps> = ({ navigation }) => {
         headers: { "Content-Type": "application/json" },
       });
       Alert.alert("Success", "Login successful!");
-      navigation.navigate("Home")
+      navigation.navigate("Home");
       setForm({ identifier: "", password: "" });
     } catch (error: any) {
       console.error(error);
@@ -89,8 +89,8 @@ const Login: React.FC<loginScreenProps> = ({ navigation }) => {
         <Text style={styles.title}>Welcome to Blue Drop!</Text>
         <Text style={styles.subTitle}>Register here to continue !</Text>
         <CustomInputField
-          label="Email"
-          placeholder="Enter your email"
+          label="Email or Phone Number"
+          placeholder="Enter your email id or phone number"
           value={form.identifier}
           onChange={handleChange}
           name="identifier"
