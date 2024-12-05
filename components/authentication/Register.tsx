@@ -13,7 +13,8 @@ import CustomInputField from "../input/CustomInputField";
 import LinkButton from "../button/LinkButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../utils/routersRelated";
-import { API_URL } from "@env";
+import { API_URL, API_URL_PROD } from "@env";
+
 type registerScreenProps = NativeStackScreenProps<
   RootStackParamList,
   "register"
@@ -91,10 +92,11 @@ const Register: React.FC<registerScreenProps> = ({ navigation }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post(`${API_URL}/register-user`, form, {
+      const response = await axios.post(`${API_URL_PROD}/register-user`, form, {
         headers: { "Content-Type": "application/json" },
       });
       Alert.alert(response.data);
+      navigation.navigate("login");
       setForm({ name: "", email: "", phoneNumber: "", password: "" });
     } catch (error: any) {
       console.error(error);

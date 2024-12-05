@@ -13,7 +13,7 @@ import CustomButton from "../button/CustomButton";
 import CustomInputField from "../input/CustomInputField";
 import LinkButton from "../button/LinkButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { API_URL } from "@env";
+import { API_URL, API_URL_PROD } from "@env";
 
 type loginScreenProps = NativeStackScreenProps<RootStackParamList, "login">;
 
@@ -67,7 +67,7 @@ const Login: React.FC<loginScreenProps> = ({ navigation }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post(`${API_URL}/login-user`, form, {
+      const response = await axios.post(`${API_URL_PROD}/login-user`, form, {
         headers: { "Content-Type": "application/json" },
       });
       Alert.alert("Success", "Login successful!");
