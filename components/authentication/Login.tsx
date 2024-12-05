@@ -14,19 +14,16 @@ import CustomInputField from "../input/CustomInputField";
 import LinkButton from "../button/LinkButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-type loginScreenProps =NativeStackScreenProps<
-  RootStackParamList,
-  "login"
->
+type loginScreenProps = NativeStackScreenProps<RootStackParamList, "login">;
 
-const Login: React.FC<loginScreenProps> = ({navigation}) => {
+const Login: React.FC<loginScreenProps> = ({ navigation }) => {
   const [form, setForm] = useState({
-    email: "",
+    identifier: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    email: "",
+    identifier: "",
     password: "",
   });
 
@@ -40,17 +37,17 @@ const Login: React.FC<loginScreenProps> = ({navigation}) => {
   const validateForm = () => {
     let isValid = true;
     const newErrors = {
-      email: "",
+      identifier: "",
       password: "",
     };
 
-    if (!form.email.trim()) {
-      newErrors.email = "Email is required";
+    if (!form.identifier.trim()) {
+      newErrors.identifier = "identifier is required";
       isValid = false;
     } else if (
-      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(form.email)
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(form.identifier)
     ) {
-      newErrors.email = "Invalid email format";
+      newErrors.identifier = "Invalid email format";
       isValid = false;
     }
 
@@ -73,7 +70,7 @@ const Login: React.FC<loginScreenProps> = ({navigation}) => {
         headers: { "Content-Type": "application/json" },
       });
       Alert.alert("Success", "Login successful!");
-      setForm({ email: "", password: "" });
+      setForm({ identifier: "", password: "" });
     } catch (error: any) {
       console.error(error);
       const message =
@@ -92,11 +89,11 @@ const Login: React.FC<loginScreenProps> = ({navigation}) => {
         <CustomInputField
           label="Email"
           placeholder="Enter your email"
-          value={form.email}
+          value={form.identifier}
           onChange={handleChange}
-          name="email"
+          name="identifier"
           keyboardType="email-address"
-          errorMessage={errors.email}
+          errorMessage={errors.identifier}
         />
         <CustomInputField
           label="Password"
@@ -117,7 +114,7 @@ const Login: React.FC<loginScreenProps> = ({navigation}) => {
           <Text>Don't have an account?</Text>
           <LinkButton
             title="Register"
-            onPress={() => navigation.navigate('register')}
+            onPress={() => navigation.navigate("register")}
             size="sm"
             variant="link"
           />
@@ -149,11 +146,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  subTitle:{
+  subTitle: {
     fontSize: 18,
     fontWeight: "500",
     marginBottom: 10,
-  }
+  },
 });
 
 export default Login;
