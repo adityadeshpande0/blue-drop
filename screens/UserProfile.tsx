@@ -4,6 +4,7 @@ import { SafeAreaView, Text } from "react-native";
 import { RootStackParamList } from "../utils/routersRelated";
 import { useEffect } from "react";
 import axios from "axios";
+import { API_URL, API_URL_PROD } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UserProfile: React.FC = () => {
@@ -18,21 +19,15 @@ const UserProfile: React.FC = () => {
       }
 
       try {
-        const response = await axios.get(
-          "http://192.168.31.180:8080/blue-drop/auth/user-profile",
-          {
-            headers: {
-              Authorization: `Bearer ${storedToken}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axios.get(`${API_URL_PROD}/auth/user-profile`, {
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+            "Content-Type": "application/json",
+          },
+        });
         console.log("Response data:", response.data);
       } catch (error) {
-        console.error(
-          "Error fetching user profile:",
-          error
-        );
+        console.error("Error fetching user profile:", error);
       }
     };
 
