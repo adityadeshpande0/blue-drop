@@ -14,10 +14,13 @@ import CustomInputField from "../input/CustomInputField";
 import LinkButton from "../button/LinkButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { API_URL, API_URL_PROD } from "@env";
+import useHandleToken from "../../hooks/useHandleToken";
 
 type loginScreenProps = NativeStackScreenProps<RootStackParamList, "login">;
 
 const Login: React.FC<loginScreenProps> = ({ navigation }) => {
+  const { token, storeToken } = useHandleToken();
+
   const [form, setForm] = useState({
     identifier: "",
     password: "",
@@ -71,7 +74,10 @@ const Login: React.FC<loginScreenProps> = ({ navigation }) => {
         headers: { "Content-Type": "application/json" },
       });
       Alert.alert("Success", "Login successful!");
-      navigation.navigate("Home");
+      // navigation.navigate("Home");
+      const authToken = response.data.token;
+      console.log(authToken);
+      storeToken("authToken", authToken);
       setForm({ identifier: "", password: "" });
     } catch (error: any) {
       console.error(error);
