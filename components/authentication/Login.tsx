@@ -15,11 +15,12 @@ import LinkButton from "../button/LinkButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { API_URL, API_URL_PROD } from "@env";
 import useHandleToken from "../../hooks/useHandleToken";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type loginScreenProps = NativeStackScreenProps<RootStackParamList, "login">;
 
 const Login: React.FC<loginScreenProps> = ({ navigation }) => {
-  const { token, storeToken } = useHandleToken();
+  // const { token, storeToken, getToken } = useHandleToken();
 
   const [form, setForm] = useState({
     identifier: "",
@@ -66,28 +67,35 @@ const Login: React.FC<loginScreenProps> = ({ navigation }) => {
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
-
+  
     setIsSubmitting(true);
-
+  
     try {
       const response = await axios.post(`${API_URL_PROD}/login-user`, form, {
         headers: { "Content-Type": "application/json" },
       });
-      Alert.alert("Success", "Login successful!");
-      // navigation.navigate("Home");
+  
       const authToken = response.data.token;
-      console.log(authToken);
-      storeToken("authToken", authToken);
-      setForm({ identifier: "", password: "" });
+      if (authToken) {
+       await AsyncStorage.setItem("tokenAuth", authToken);
+       const storedToken = await AsyncStorage.getItem("tokenAuth");
+        console.log("test value", storedToken)
+        Alert.alert("Success", "Login successful!");
+        setForm({ identifier: "", password: "" });
+        navigation.navigate("userprofile");
+      } else {
+        Alert.alert("Error", "Token not found in response.");
+      }
     } catch (error: any) {
       console.error(error);
       const message =
-        error.response?.data?.message || "The API is Not Integrated yet.";
+        error.response?.data?.message || "The API is not integrated yet.";
       Alert.alert("Error", message);
     } finally {
       setIsSubmitting(false);
     }
   };
+  
 
   return (
     <SafeAreaView style={styles.safeArea}>

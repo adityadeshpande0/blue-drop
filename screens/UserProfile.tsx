@@ -2,8 +2,43 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View } from "native-base";
 import { SafeAreaView, Text } from "react-native";
 import { RootStackParamList } from "../utils/routersRelated";
+import { useEffect } from "react";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UserProfile: React.FC = () => {
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const storedToken = await AsyncStorage.getItem("tokenAuth");
+      console.log("Stored token:", storedToken);
+
+      if (!storedToken) {
+        console.error("Token is missing. Please log in again.");
+        return;
+      }
+
+      try {
+        const response = await axios.get(
+          "http://192.168.31.180:8080/blue-drop/auth/user-profile",
+          {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("Response data:", response.data);
+      } catch (error) {
+        console.error(
+          "Error fetching user profile:",
+          error
+        );
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
   return (
     <SafeAreaView>
       <View>
@@ -12,4 +47,5 @@ const UserProfile: React.FC = () => {
     </SafeAreaView>
   );
 };
+
 export default UserProfile;
