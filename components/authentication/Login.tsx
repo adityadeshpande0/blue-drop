@@ -67,19 +67,19 @@ const Login: React.FC<loginScreenProps> = ({ navigation }) => {
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
-  
+
     setIsSubmitting(true);
-  
+
     try {
       const response = await axios.post(`${API_URL_PROD}/login-user`, form, {
         headers: { "Content-Type": "application/json" },
       });
-  
+
       const authToken = response.data.token;
       if (authToken) {
-       await AsyncStorage.setItem("tokenAuth", authToken);
-       const storedToken = await AsyncStorage.getItem("tokenAuth");
-        console.log("test value", storedToken)
+        await AsyncStorage.setItem("tokenAuth", authToken);
+        const storedToken = await AsyncStorage.getItem("tokenAuth");
+        console.log("test value", storedToken);
         Alert.alert("Success", "Login successful!");
         setForm({ identifier: "", password: "" });
         navigation.navigate("userprofile");
@@ -95,13 +95,14 @@ const Login: React.FC<loginScreenProps> = ({ navigation }) => {
       setIsSubmitting(false);
     }
   };
-  
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Welcome to Blue Drop!</Text>
-        <Text style={styles.subTitle}>Register here to continue !</Text>
+        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+          <Text style={styles.title}>Log in to</Text>
+          <Text style={styles.title2}>Blue Drop!</Text>
+        </View>
         <CustomInputField
           label="Email or Phone Number"
           placeholder="Enter your email id or phone number"
@@ -121,13 +122,19 @@ const Login: React.FC<loginScreenProps> = ({ navigation }) => {
           errorMessage={errors.password}
         />
         <CustomButton
-          style={styles.loginButtonStyles}
+          style={styles.loginButtonStyle}
+          textStyle={{
+            fontSize: 16,
+            fontWeight: "600",
+            color: "#00000",
+            letterSpacing: 1,
+          }}
           title={isSubmitting ? "Logging in..." : "Login"}
           onPress={handleSubmit}
           disabled={isSubmitting}
         />
         <View style={styles.registerPrompt}>
-          <Text>Don't have an account?</Text>
+          <Text style={{ color: "#FFFFFF" }}>Don't have an account?</Text>
           <LinkButton
             title="Register"
             onPress={() => navigation.navigate("register")}
@@ -143,29 +150,35 @@ const Login: React.FC<loginScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#000000",
   },
   container: {
     flexGrow: 1,
+    color: "white",
     paddingVertical: 20,
     paddingHorizontal: 15,
+    marginVertical: 40,
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 40,
+    color: "white",
     marginBottom: 10,
+    letterSpacing: 2,
   },
-  loginButtonStyles: {
-    marginVertical: 12,
+  title2: {
+    fontSize: 40,
+    color: "#64B5F6",
+    marginBottom: 10,
+    fontWeight: "600",
+    letterSpacing: 4,
   },
   registerPrompt: {
     flexDirection: "row",
     alignItems: "center",
   },
-  subTitle: {
-    fontSize: 18,
-    fontWeight: "500",
-    marginBottom: 10,
+  loginButtonStyle: {
+    marginVertical: 12,
+    backgroundColor: "#64B5F6",
   },
 });
 
