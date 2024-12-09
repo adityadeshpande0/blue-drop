@@ -4,5 +4,6 @@ export type RootStackParamList = {
   landingscreen: undefined;
   mockscreen:undefined
   Home:undefined,
-  landing:undefined
+  landing:undefined,
+  userprofile:undefined
 };

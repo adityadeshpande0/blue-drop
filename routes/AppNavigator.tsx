@@ -1,5 +1,11 @@
 import React from "react";
-import { Platform, SafeAreaView, StatusBar, View, StyleSheet } from "react-native";
+import {
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  View,
+  StyleSheet,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -9,16 +15,22 @@ import MocksScreen from "../utils/MockScreen";
 import Register from "../components/authentication/Register";
 import Home from "../screens/Home";
 import LandingScreen from "../screens/LandingScreen";
+import UserProfile from "../screens/UserProfile";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator: React.FC = () => {
-  const statusBarHeight = Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0;
+  const statusBarHeight =
+    Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0;
 
   return (
     <SafeAreaProvider>
       <View style={[styles.container, { marginTop: statusBarHeight }]}>
-        <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle="dark-content"
+        />
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -51,6 +63,15 @@ const AppNavigator: React.FC = () => {
               options={{ headerShown: false }}
               name="landing"
               component={LandingScreen}
+            />
+            <Stack.Screen
+              options={{
+                headerShown: true,
+                title: "Profile",
+                headerBackTitle: "back",
+              }}
+              name="userprofile"
+              component={UserProfile}
             />
           </Stack.Navigator>
         </NavigationContainer>

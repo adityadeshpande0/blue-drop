@@ -51,6 +51,10 @@ const MocksScreen: React.FC<LandingScreenProps> = ({ navigation }) => {
           title="Home Screen"
           onPress={() => navigation.navigate("Home")}
         />
+         <CustomButton
+          title="User Profile"
+          onPress={() => navigation.navigate("userprofile")}
+        />
       </View>
     </SafeAreaView>
   );
