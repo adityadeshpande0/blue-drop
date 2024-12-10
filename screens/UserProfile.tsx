@@ -1,32 +1,37 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View } from "native-base";
 import {
   ActivityIndicator,
   SafeAreaView,
   StyleSheet,
   Text,
+  View,
 } from "react-native";
 import { RootStackParamList } from "../utils/routersRelated";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL, API_URL_PROD } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomButton from "../components/button/CustomButton";
 type UserProfileData = {
   name: string;
   email: string;
   phoneNumber?: string;
   address?: string;
 };
-const UserProfile: React.FC = () => {
+type ProfileScreeenProps = NativeStackScreenProps<
+  RootStackParamList,
+  "userprofile"
+>;
+const UserProfile: React.FC<ProfileScreeenProps> = ({ navigation }) => {
   const [userProfile, setUserProfile] = useState<UserProfileData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
     const fetchUserProfile = async () => {
       const storedToken = await AsyncStorage.getItem("tokenAuth");
       console.log("Stored token:", storedToken);
-
       if (!storedToken) {
         console.error("Token is missing. Please log in again.");
+        navigation.navigate("login");
         return;
       }
 
@@ -37,7 +42,7 @@ const UserProfile: React.FC = () => {
             "Content-Type": "application/json",
           },
         });
-        console.log("Response data:", response.data);
+
         setUserProfile(response.data.user);
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -55,6 +60,13 @@ const UserProfile: React.FC = () => {
       </SafeAreaView>
     );
   }
+
+  const handleSignOut = async () => {
+    await AsyncStorage.removeItem("tokenAuth");
+    console.log("Signout success");
+    navigation.navigate("login");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {userProfile ? (
@@ -82,18 +94,21 @@ const UserProfile: React.FC = () => {
       ) : (
         <Text style={styles.errorText}>User profile not available.</Text>
       )}
+      <View>
+        <CustomButton title={"Sign Out"} onPress={handleSignOut} />
+      </View>
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 10,
     alignItems: "center",
     backgroundColor: "#f9f9f9",
   },
   profileContainer: {
     padding: 20,
+    marginVertical: 20,
     backgroundColor: "#fff",
     borderRadius: 8,
     shadowColor: "#000",

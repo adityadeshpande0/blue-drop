@@ -10,7 +10,7 @@ interface CustomInputFieldProps {
   keyboardType?: "default" | "email-address" | "phone-pad";
   secureTextEntry?: boolean;
   errorMessage?: string;
-  placeholderTextColor?: string; // New Prop
+  placeholderTextColor?: string;
 }
 
 const CustomInputField: React.FC<CustomInputFieldProps> = ({
@@ -22,7 +22,7 @@ const CustomInputField: React.FC<CustomInputFieldProps> = ({
   keyboardType = "default",
   secureTextEntry = false,
   errorMessage,
-  placeholderTextColor = "#999", // Default color
+  placeholderTextColor = "#999", 
 }) => {
   const inputRef = useRef<TextInput | null>(null);
 
@@ -33,7 +33,7 @@ const CustomInputField: React.FC<CustomInputFieldProps> = ({
         ref={inputRef}
         style={[styles.input, errorMessage ? styles.inputError : null]}
         placeholder={placeholder}
-        placeholderTextColor={placeholderTextColor} // Apply placeholder text color
+        placeholderTextColor={placeholderTextColor} 
         value={value}
         onChangeText={(text) => onChange(name, text)}
         keyboardType={keyboardType}
