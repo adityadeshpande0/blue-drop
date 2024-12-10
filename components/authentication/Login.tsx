@@ -47,12 +47,15 @@ const Login: React.FC<loginScreenProps> = ({ navigation }) => {
     };
 
     if (!form.identifier.trim()) {
-      newErrors.identifier = "identifier is required";
+      newErrors.identifier = "Email/Phone Number is required";
       isValid = false;
     } else if (
-      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(form.identifier)
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(
+        form.identifier
+      ) &&
+      !/^\+?[1-9]\d{1,14}$/.test(form.identifier)
     ) {
-      newErrors.identifier = "Invalid email format";
+      newErrors.identifier = "Invalid email or phone number format";
       isValid = false;
     }
 

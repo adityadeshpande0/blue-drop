@@ -112,8 +112,10 @@ const Register: React.FC<registerScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Welcome to Blue Drop !</Text>
-        <Text style={styles.subTitle}>Register here to continue !</Text>
+        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+          <Text style={styles.title}>Register for</Text>
+          <Text style={styles.title2}>Blue Drop!</Text>
+        </View>
         <CustomInputField
           label="Name"
           placeholder="Enter your name"
@@ -151,12 +153,18 @@ const Register: React.FC<registerScreenProps> = ({ navigation }) => {
         />
         <CustomButton
           style={styles.registerButtonStyles}
+          textStyle={{
+            fontSize: 16,
+            fontWeight: "600",
+            color: "#00000",
+            letterSpacing: 1,
+          }}
           title={isSubmitting ? "Registering..." : "Register"}
           onPress={handleSubmit}
           disabled={isSubmitting}
         />
         <View style={styles.forgotView}>
-          <Text>Already have account ?</Text>
+          <Text style={{ color: "#fff" }}>Already have account ?</Text>
           <LinkButton
             title="Login"
             onPress={() => navigation.navigate("login")}
@@ -172,20 +180,31 @@ const Register: React.FC<registerScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
+    backgroundColor: "black",
   },
   container: {
     display: "flex",
     flexGrow: 1,
     paddingVertical: 20,
     paddingHorizontal: 15,
+    marginVertical: 40,
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
+    fontSize: 40,
+    color: "white",
+    marginBottom: 10,
+    letterSpacing: 2,
+  },
+  title2: {
+    fontSize: 40,
+    color: "#64B5F6",
+    marginBottom: 10,
+    fontWeight: "600",
+    letterSpacing: 4,
   },
   registerButtonStyles: {
     marginVertical: 12,
+    backgroundColor: "#64B5F6",
   },
   forgotView: {
     display: "flex",
